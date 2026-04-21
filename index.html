@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QRift — Artistic QR Codes That Stand Out</title>
+  <meta name="description" content="Generate stunningly beautiful, fully customizable QR codes. Free, fast, and artistic. No sign-up required." />
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="QRift — Artistic QR Codes That Stand Out" />
+  <meta property="og:description" content="The most beautiful QR code generator. Free forever." />
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  
+  <!-- External Libraries (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.9.2/lib/qr-code-styling.js"></script>
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="https://blackbirdo.com/images/icon.png" />
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ── Particle Canvas Background ── -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <div class="app">
+
+    <!-- ── HEADER ── -->
+    <header>
+      <div>
+        <div class="logo">
+          <div class="logo-icon" aria-hidden="true">
+            <!-- Mini QR icon -->
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="7" height="7" rx="1.5" fill="white"/>
+              <rect x="11" y="2" width="7" height="7" rx="1.5" fill="white"/>
+              <rect x="2" y="11" width="7" height="7" rx="1.5" fill="white"/>
+              <rect x="13" y="13" width="2" height="2" fill="white"/>
+              <rect x="11" y="11" width="2" height="2" fill="white"/>
+              <rect x="16" y="11" width="2" height="5" fill="white"/>
+              <rect x="11" y="16" width="5" height="2" fill="white"/>
+            </svg>
+          </div>
+          QR<span>ift</span>
+        </div>
+        <div class="tagline">Artistic QR Codes That Stand Out</div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle" title="Toggle theme" aria-label="Toggle light/dark mode">
+          <svg id="moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg id="sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </button>
+        <a class="icon-btn" href="https://github.com" target="_blank" rel="noopener" title="GitHub" aria-label="View on GitHub">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.66-.22.66-.48v-1.69c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.67.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
+        </a>
+      </div>
+    </header>
+
+    <!-- ── HERO INPUT ── -->
+    <div class="hero-input-wrap">
+      <input
+        type="text"
+        id="qr-input"
+        class="hero-input"
+        placeholder="Enter a URL, text, phone number, or anything…"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="QR code content input"
+      />
+      <span class="hero-input-icon" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 10 4 15 9 20"/><path d="M20 4v7a4 4 0 0 1-4 4H4"/></svg>
+      </span>
+    </div>
+
+    <!-- ── PRESETS ── -->
+    <div class="presets" id="presets" role="tablist" aria-label="QR code presets">
+      <button class="preset-btn active" data-preset="url" role="tab">🔗 URL</button>
+      <button class="preset-btn" data-preset="wifi" role="tab">📶 WiFi</button>
+      <button class="preset-btn" data-preset="phone" role="tab">📞 Phone</button>
+      <button class="preset-btn" data-preset="email" role="tab">✉️ Email</button>
+      <button class="preset-btn" data-preset="vcard" role="tab">👤 vCard</button>
+      <button class="preset-btn" data-preset="text" role="tab">📝 Text</button>
+    </div>
+
+    <!-- ── MAIN GRID ── -->
+    <div class="main-grid">
+
+      <!-- ── LEFT: QR Preview ── -->
+      <div>
+        <div class="preview-card" id="preview-card">
+          <div id="qr-container">
+            <div class="qr-glow-ring" aria-hidden="true"></div>
+            
+            <!-- Empty state shown until first generation -->
+            <div class="empty-state" id="empty-state">
+              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+                <rect x="4" y="4" width="28" height="28" rx="6" stroke="currentColor" stroke-width="3"/>
+                <rect x="10" y="10" width="16" height="16" rx="3" fill="currentColor" opacity=".4"/>
+                <rect x="48" y="4" width="28" height="28" rx="6" stroke="currentColor" stroke-width="3"/>
+                <rect x="54" y="10" width="16" height="16" rx="3" fill="currentColor" opacity=".4"/>
+                <rect x="4" y="48" width="28" height="28" rx="6" stroke="currentColor" stroke-width="3"/>
+                <rect x="10" y="54" width="16" height="16" rx="3" fill="currentColor" opacity=".4"/>
+                <rect x="50" y="50" width="6" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <rect x="62" y="50" width="6" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <rect x="50" y="62" width="6" height="6" rx="1" fill="currentColor" opacity=".6"/>
+                <rect x="62" y="62" width="6" height="6" rx="1" fill="currentColor" opacity=".6"/>
+              </svg>
+              <p>Start typing to generate<br>your beautiful QR code</p>
+            </div>
+            
+            <!-- QR renders here -->
+            <div id="qr-render" aria-live="polite"></div>
+          </div>
+
+          <!-- Action row -->
+          <div class="action-row" id="action-row" style="display:none">
+            <button class="action-btn primary" id="btn-png" aria-label="Download as PNG">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              PNG
+            </button>
+            <button class="action-btn" id="btn-svg" aria-label="Download as SVG">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              SVG
+            </button>
+            <button class="action-btn" id="btn-copy" aria-label="Copy to clipboard">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copy
+            </button>
+            <button class="action-btn" id="btn-share" aria-label="Share QR code">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              Share
+            </button>
+          </div>
+        </div>
+
+        <!-- ── History ── -->
+        <div class="history-section" id="history-section" style="display:none">
+          <h3>✦ Recent</h3>
+          <div class="history-list" id="history-list" aria-label="Recently generated QR codes"></div>
+        </div>
+      </div>
+
+      <!-- ── RIGHT: Customization Panel ── -->
+      <div class="panel">
+
+        <!-- Dot Style -->
+        <div>
+          <div class="panel-section-title">Dot Style</div>
+          <div class="style-grid" id="dot-styles" role="radiogroup" aria-label="Select dot style">
+            <div class="style-chip active" data-dot="rounded" role="radio" aria-checked="true">
+              <svg viewBox="0 0 22 22" aria-hidden="true"><rect x="2" y="2" width="8" height="8" rx="4" fill="currentColor"/><rect x="12" y="2" width="8" height="8" rx="4" fill="currentColor"/><rect x="2" y="12" width="8" height="8" rx="4" fill="currentColor"/><rect x="12" y="12" width="8" height="8" rx="4" fill="currentColor"/></svg>
+              Rounded
+            </div>
+            <div class="style-chip" data-dot="dots" role="radio" aria-checked="false">
+              <svg viewBox="0 0 22 22" aria-hidden="true"><circle cx="6" cy="6" r="3" fill="currentColor"/><circle cx="16" cy="6" r="3" fill="currentColor"/><circle cx="6" cy="16" r="3" fill="currentColor"/><circle cx="16" cy="16" r="3" fill="currentColor"/></svg>
+              Dots
+            </div>
+            <div class="style-chip" data-dot="classy" role="radio" aria-checked="false">
+              <svg viewBox="0 0 22 22" aria-hidden="true"><path d="M2 2h8v8H2z" fill="currentColor"/><path d="M12 2h8v8H12z" fill="currentColor"/><path d="M2 12h8v8H2z" fill="currentColor"/><path d="M12 12h8v8H12z" fill="currentColor"/></svg>
+              Classy
+            </div>
+            <div class="style-chip" data-dot="classy-rounded" role="radio" aria-checked="false">
+              <svg viewBox="0 0 22 22" aria-hidden="true"><path d="M2 6a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4h0a4 4 0 0 1-4-4z" fill="currentColor"/><path d="M12 6a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4h0a4 4 0 0 1-4-4z" fill="currentColor"/><path d="M2 16a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4h0a4 4 0 0 1-4-4z" fill="currentColor"/><path d="M12 16a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4v0a4 4 0 0 1-4 4h0a4 4 0 0 1-4-4z" fill="currentColor"/></svg>
+              Classy+
+            </div>
+            <div class="style-chip" data-dot="extra-rounded" role="radio" aria-checked="false">
+              <svg viewBox="0 0 22 22" aria-hidden="true"><rect x="2" y="2" width="8" height="8" rx="3" fill="currentColor"/><rect x="12" y="2" width="8" height="8" rx="3" fill="currentColor"/><rect x="2" y="12" width="8" height="8" rx="3" fill="currentColor"/><rect x="12" y="12" width="8" height="8" rx="3" fill="currentColor"/></svg>
+              Extra+
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Corner Style -->
+        <div>
+          <div class="panel-section-title">Corner Style</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
+            <select id="corner-sq-style" aria-label="Corner square style">
+              <option value="square">Square</option>
+              <option value="extra-rounded">Rounded</option>
+              <option value="dot">Dot</option>
+            </select>
+            <select id="corner-dot-style" aria-label="Corner dot style">
+              <option value="square">Inner Square</option>
+              <option value="dot">Inner Dot</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Colors -->
+        <div>
+          <div class="panel-section-title">Colors</div>
+          <div style="display:flex; flex-direction:column; gap:10px">
+            <div class="color-row">
+              <div class="color-swatch"><input type="color" id="fg-color" value="#7c5cfc" aria-label="Foreground color picker" /></div>
+              <span class="color-label">Foreground</span>
+            </div>
+            <div class="color-row">
+              <div class="color-swatch"><input type="color" id="bg-color" value="#0a0a0f" aria-label="Background color picker" /></div>
+              <span class="color-label">Background</span>
+            </div>
+          </div>
+
+          <!-- Gradient -->
+          <div class="gradient-section">
+            <div class="toggle-row" style="margin-top:12px">
+              <label for="gradient-toggle">Gradient</label>
+              <div class="toggle" id="gradient-toggle" role="switch" aria-checked="false" tabindex="0"></div>
+            </div>
+            <div id="gradient-options" style="display:none; flex-direction:column; gap:10px">
+              <div class="color-row">
+                <div class="color-swatch"><input type="color" id="grad-color2" value="#3ecfcf" aria-label="Gradient end color picker" /></div>
+                <span class="color-label">Gradient End</span>
+              </div>
+              <select id="grad-type" aria-label="Gradient type">
+                <option value="linear">Linear</option>
+                <option value="radial">Radial</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Logo / Image -->
+        <div>
+          <div class="panel-section-title">Center Logo</div>
+          <div class="logo-grid" id="logo-grid" role="radiogroup" aria-label="Select center logo">
+            <div class="logo-chip active" data-logo="none" title="No logo" role="radio" aria-checked="true">✕</div>
+            <div class="logo-chip" data-logo="github" title="GitHub" role="radio" aria-checked="false">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49.5.09.66-.22.66-.48v-1.69c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.56 9.56 0 0 1 12 6.8c.85 0 1.71.11 2.51.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.16.58.67.48A10.01 10.01 0 0 0 22 12c0-5.52-4.48-10-10-10z"/></svg>
+            </div>
+            <div class="logo-chip" data-logo="heart" title="Heart" role="radio" aria-checked="false">❤️</div>
+            <div class="logo-chip" data-logo="star" title="Star" role="radio" aria-checked="false">⭐</div>
+            <div class="logo-chip" data-logo="wifi" title="WiFi" role="radio" aria-checked="false">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            </div>
+            <div class="logo-chip" data-logo="link" title="Link" role="radio" aria-checked="false">🔗</div>
+            <div class="logo-chip" data-logo="upload" title="Upload custom" id="logo-upload-chip" role="radio" aria-checked="false">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            </div>
+          </div>
+          <input type="file" id="logo-file" accept="image/*" style="display:none" aria-label="Upload custom logo" />
+
+          <!-- Logo opacity -->
+          <div style="margin-top:12px">
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+              <span style="font-size:.78rem;color:var(--muted)">Logo Opacity</span>
+              <span class="slider-val" id="opacity-val">1.0</span>
+            </div>
+            <input type="range" id="logo-opacity" min="0.1" max="1" step="0.05" value="1" aria-label="Logo opacity slider" />
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Size -->
+        <div>
+          <div class="panel-section-title">Preview Size</div>
+          <div class="slider-wrap">
+            <input type="range" id="qr-size" min="250" max="550" step="10" value="320" aria-label="QR code size slider" />
+            <span class="slider-val" id="size-val">320px</span>
+          </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Surprise Me -->
+        <button class="surprise-btn" id="surprise-btn" aria-label="Apply random stylish preset">
+          ✦ Surprise Me
+        </button>
+
+      </div><!-- /panel -->
+    </div><!-- /main-grid -->
+
+    <!-- ── Footer ── -->
+    <footer>
+      Built with ❤️ as a free tool &nbsp;| <a href="https://blackbirdo.com" target="_blank">BlackBirdo.com</a>  &nbsp;|
+      <a href="https://github.com" target="_blank">Open Source on GitHub</a>
+    </footer>
+
+  </div><!-- /app -->
+
+  <!-- ── Toast Notification ── -->
+  <div id="toast" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span id="toast-msg">Copied!</span></div>
+
+  <!-- ── Application Scripts ── -->
+  <script src="js/utils.js"></script>
+  <script src="js/qr-generator.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
