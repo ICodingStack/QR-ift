@@ -28,16 +28,10 @@ Generate stunningly beautiful, fully customizable QR codes with glassmorphism de
 
 ## 📸 Screenshots
 
-![QRift Interface](./assets/screenshots/interface.png)
+![QRift Interface](./assets/screenshots/dark-mode.png)
 *Main interface with real-time preview*
 
-![Customization Panel](./assets/screenshots/customization.png)
-*Full artistic customization options*
 
-![Generated QR](./assets/screenshots/qr-example.png)
-*Example of artistic QR code with gradient and logo*
-
-> 💡 Add your own screenshots later by placing images in `assets/screenshots/` folder.
 
 ---
 
